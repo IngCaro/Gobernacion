@@ -14,6 +14,7 @@ and open the template in the editor.
           echo "Hola muun";
           echo "siempre";
           echo "nuevo mensaje";
+          echo "cambieee";
         ?>
     </body>
 </html>
