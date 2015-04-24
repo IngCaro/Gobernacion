@@ -13,6 +13,7 @@ and open the template in the editor.
         <?php
           echo "Hola muun";
           echo "siempre";
+          echo "nuevo mensaje";
         ?>
     </body>
 </html>
