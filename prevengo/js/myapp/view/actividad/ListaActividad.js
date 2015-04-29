@@ -1,4 +1,4 @@
-Ext.define('myapp.view.registrar.ListaActividad', {
+Ext.define('myapp.view.actividad.ListaActividad', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.listaActividad',
     itemId: 'listaActividad',
@@ -12,19 +12,9 @@ Ext.define('myapp.view.registrar.ListaActividad', {
     
         
  
-    features: [{
-            ftype: 'filters',
-            local: true
-        }, {
-            id: 'group',
-            ftype: 'groupingsummary',
-            //groupHeaderTpl:'{name}',
-            groupHeaderTpl: '<font size=2><font size=2>{name}</font>',
-            hideGroupedHeader: true,
-            enableGroupingMenu: false
-        }],
+    features: [],
     store: Ext.create('myapp.store.actividad.ActividadGridStore'),
-    selType: 'checkboxmodel',
+    
     emptyText: 'No hay datos registrados',
     columnLines: true,
     initComponent: function () {
@@ -147,12 +137,7 @@ Ext.define('myapp.view.registrar.ListaActividad', {
                 dock: 'bottom',
                 store: this.store,
                 displayInfo: true,
-                  items: [{
-                        xtype: 'button',
-                        name: 'btnVerPlan',
-                        text: 'Ver Plan de Accion',
-                        iconCls: 'buscar1'
-                    }]
+                  items: []  
             }];
     }
 });

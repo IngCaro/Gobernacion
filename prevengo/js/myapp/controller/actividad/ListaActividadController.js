@@ -2,10 +2,10 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
     extend: 'Ext.app.Controller',
     views: ['actividad.ListaActividad',
              'actividad.WinPlanEvento'
+             
             ],
      requires: [
         'myapp.util.Util'
-       
         
     ],
    
@@ -13,14 +13,22 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
            {
               ref: 'ListaActividad',
               selector: 'listaActividad'
-             }
+             },
+              {
+              ref: 'ListaPlanEvento',
+              selector: 'listaPlanEvento'
+             },
+             
             
            ],
     
     init: function(application) {
         this.control({
-            "listaActividad button[name=btnVerPlan]":{
-                click: this.onClickVerPlan
+            "listaActividad":{
+                itemdblclick: this.editarUsuario
+            },
+            "winActividad checkbox[name=cbfDepende]":{
+                selection: this.cargarActividad
             }
         }); 
     },   
@@ -30,11 +38,10 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
          record = grid.getSelectionModel().getSelection();
         // record = Ext.util.JSON.encode(record);
         if(record[0]){
-
-           var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
-            win.show();
-          
-                             
+            
+            record[0].get('id');
+            
+                              
         }else{
             Ext.MessageBox.show({ title: 'Informaci&oacute;n',
             msg: 'Debe seleccionar por lo menos un Evento',
@@ -44,8 +51,22 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
 
 
 
-
-
+ editarUsuario: function (record, item, index, e, eOpts ){
+    
+    var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
+         
+     newGrid=this.getListaPlanEvento();
+     
+      store= newGrid.getStore();      
+      store.proxy.extraParams.id=item.data.id;
+      store.load();
+      newGrid.down("label[name=lblIdEvento]").setText(item.data.id);
+      win.show();
+      
+  },
+  
+  
+  
 });
 
 

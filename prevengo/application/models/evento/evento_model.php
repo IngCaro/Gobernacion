@@ -29,6 +29,13 @@ class Evento_model extends CI_Model {
             return $query;
             
        }
+
+
+       public function  cambiarEstatus($data){         
+         $this->db->set('estatus',$data['estatus']);
+         $this->db->where('id',$data['id']);
+         return  $this->db->update('evento');
+    }
     
 
 }// fin de la clase

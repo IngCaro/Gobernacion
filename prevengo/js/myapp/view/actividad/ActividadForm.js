@@ -35,7 +35,10 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                                 x: 10,
                                 y: 10,
                                 width: 470,
-                                fieldLabel: 'Descripción',
+                                allowBlank :false,
+                                minLength:5,
+                                maxLength: 95,
+                                fieldLabel: 'Descripción (*):',
                                 name:'txtDescripcion'
                             },
                             {
@@ -44,7 +47,12 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                                 y: 90,
                                 width: 220,
                                 fieldLabel: 'Fecha Tope',
-                                name:'dtfFechaT'
+                                name:'dtfFechaT',
+                                format:'Y-m-d',
+                                minValue: new Date(), //<-- min date is today
+                                value:new Date()
+                                
+                               
                             },
                             {
                                 xtype: 'datefield',
@@ -52,7 +60,10 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                                 y: 80,
                                 width: 220,
                                 fieldLabel: 'Fecha de Preaviso:',
-                                name:'dtfFechaPA'
+                                name:'dtfFechaPA',
+                                format:'Y-m-d',
+                                minValue: new Date(), //<-- min date is today
+                                value:new Date()
                             }
                         ]
                     }, {
@@ -77,7 +88,18 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                                 x: 200,
                                 y: 10,
                                 fieldLabel: 'Actividad:',
-                                name:'cmbActividadDepende'
+                                name:'cmbActividadDepende',
+                                editable      : false,
+                                store         : Ext.create('myapp.store.actividad.ActividadDependienteStore'),
+                                valueField    : 'id',
+                                displayField  : 'descripcion',
+                                emptyText     :'Seleccione',
+                                queryMode     : 'local',
+                                disabled       :true,
+                                forceSelection: true,
+                                triggerAction : 'all'
+                                
+                                
                             }
                         ]
                     }
@@ -94,12 +116,17 @@ Ext.define('myapp.view.actividad.ActividadForm', {
             width: '100%',
             items: [{
                     xtype: 'tbfill'
-                }, {
-                    xtype: 'button',
-                    iconCls: 'icon-limpiar',
-                    name: 'btnLimpiar',
-                    text: 'Limpiar'
-                }, {
+                },  {
+                    xtype: 'label',
+                    iconCls: 'save',
+                    name: 'btnGuardar',
+                    x:100,
+                    y:10,     
+                    text: '(*)Dato Obligatorio',
+                    disabled: false,
+                    //formBind: true,
+                    scope: this,
+                },{
                     xtype: 'button',
                     iconCls: 'save',
                     name: 'btnGuardar',
@@ -108,7 +135,22 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                     disabled: false,
                     //formBind: true,
                     scope: this,
-                }]
+                },{
+                    xtype: 'button',
+                    iconCls: 'icon-limpiar',
+                    name: 'btnLimpiar',
+                    text: 'Limpiar'
+                },
+                {
+                        xtype: 'label',
+                        name: 'lblIdEvent',
+                        text: '',
+                        hidden:true
+     
+                       
+                    }
+                
+            ]
         }]
 
 });

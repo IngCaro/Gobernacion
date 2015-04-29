@@ -1,10 +1,9 @@
-Ext.define('myapp.store.actividad.ActividadEventoStore', {
+Ext.define('myapp.store.actividad.ActividadDependienteStore', {
     extend: 'Ext.data.Store',
     model: 'myapp.model.store.actividad.ActividadListaModel',
     proxy: { 
         type:'ajax',
-        params:'',
-        url: BASE_URL + 'actividad/actividad/obtenerPlandeAccionDeEvento',
+        url: BASE_URL + 'actividad/actividad/obtenerActividadDependiente',
         reader: {
             type:'json', 
             root: 'data'

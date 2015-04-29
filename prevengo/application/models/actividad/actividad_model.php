@@ -55,17 +55,15 @@ public function  cambiarEstatus($data){
         $sql="SELECT ev.id AS id,
                      ev.titulo AS evento,
                      ev.descripcion AS descripcion,
-                     ev.fechatope AS fecha, 
-                     actividad.id AS actividad,
-                     actividad.descripcion AS descripEvento     
+                     ev.fechatope AS fecha
+                         
                 FROM evento AS ev 
-                INNER JOIN  actividad ON actividad.evento=ev.id 
-                WHERE ev.estatus IN (1,2) AND 
-                      actividad.estatus IN (1,2) AND 
-                      actividad.usuario =1
+                
+                WHERE ev.estatus IN (1,2)
+                      
                        
                       
-                ORDER BY ev.estatus,fecha ASC";
+                ORDER BY fecha, ev.estatus  ASC";
 
           $query = $this->db->query($sql);
                 $resultado = array();
@@ -90,6 +88,28 @@ public function  cambiarEstatus($data){
                       ac.estatus IN (1,2) 
                       AND ac.usuario=1  
                       AND ac.evento=$id";
+
+          $query = $this->db->query($sql);
+                $resultado = array();
+                $resultdb=array();  
+                if ($query->num_rows() > 0){
+                foreach ($query->result() as $row){
+                    $resultado[] = $row;
+                }
+                return $resultado;
+                $query->free-result();
+              } 
+    
+ }
+ 
+ 
+  public function cargarActividadDependiente($id){
+  
+        $sql="SELECT ac.id AS id,
+                     ac.descripcion AS descripcion 
+                 FROM actividad AS ac 
+                 WHERE ac.estatus in (1,2) AND 
+                        ac.evento=$id";
 
           $query = $this->db->query($sql);
                 $resultado = array();

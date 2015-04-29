@@ -1,109 +1,105 @@
 Ext.define('myapp.controller.avance.AvanceController', {
     extend: 'Ext.app.Controller',
     views: ['registrar.Avance',
-            'registrar.GridListaAvance',
-            'registrar.Gridbuscar',
-
-            ],
-     requires: [
+        'registrar.GridListaAvance',
+        'registrar.Gridbuscar',
+    ],
+    requires: [
         'myapp.util.Util'
     ],
     refs: [
-           {
-              ref: 'Avance',
-              selector: '#formAvance'
-             },
-            {
-              ref: 'GridListaAvance',
-              selector: '#gridListaAvance'
-             },
-             
-             {
-              ref: 'Gridbuscar',
-              selector: '#gridbuscar'
-             }
-             
-           ],
-    
-    init: function(application) {
+        {
+            ref: 'Avance',
+            selector: '#formAvance'
+        },
+        {
+            ref: 'GridListaAvance',
+            selector: '#gridListaAvance'
+        },
+        {
+            ref: 'Gridbuscar',
+            selector: '#gridbuscar'
+        }
+
+    ],
+    init: function (application) {
         this.control({
-            "#formAvance button[name=btnGuardar]":{
+            "#formAvance button[name=btnGuardar]": {
                 click: this.onClickguardarAvance
-            }, 
-            "#formAvance button[name=btnCancelar]":{
-                 click: this.onClickLimpiarAvance
-              },
-              "#formAvance button[name=btnLimpiar]":{
+            },
+            "#formAvance button[name=btnCancelar]": {
                 click: this.onClickLimpiarAvance
-              },
-
-             "#gridListaAvance button[name=btnAgregarAvance]":{
+            },
+            "#formAvance button[name=btnLimpiar]": {
+                click: this.onClickLimpiarAvance
+            },
+            "#formAvance combobox[name=cmbActividad]": {
+                change: this.cambiarFecha
+            },
+            "#gridListaAvance button[name=btnAgregarAvance]": {
                 click: this.onClickAgregarAvance
-              }
-             
+            }
 
 
-        }); 
-    },   
 
-     onClickguardarAvance:function (button, e, options) {
-        formulario=this.getAvance();
-        grid=this.getGridListaAvance();
-        win= this.getGridbuscar();
-            var loadingMask = new Ext.LoadMask(Ext.getBody(), { msg: "grabando..." });
-                loadingMask.show();
+        });
+    },
+    onClickguardarAvance: function (button, e, options) {
+        formulario = this.getAvance();
+        grid = this.getGridListaAvance();
+        win = this.getGridbuscar();
+        var loadingMask = new Ext.LoadMask(Ext.getBody(), {msg: "grabando..."});
+        loadingMask.show();
 
-                formulario.getForm().submit({ //AQUI ENVIO LA DATA 
-                    url: BASE_URL+'avance/avance/registrarAvance',
-                    method:'POST',
-                    params:formulario.getForm().getValues(),
-                    success: function(form, action){
-                        var result = action.result;           
-                        loadingMask.hide();
-                       
-                        if (result.success){
-                              grid.getView().refresh();
-                               grid.getStore().load();
-                               Ext.MessageBox.show({ title: 'Alerta', msg:  result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
-                               win.close();
-                               
-                            }
-                        else{
-                           Ext.MessageBox.show({ title: 'Alerta', msg:  result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
-                           // myapp.util.Util.showErrorMsg(result.msg);
-                        }
-                    },
-                    failure: function(form,action){
-                    var result = action.result;    
-                     loadingMask.hide();
-                            Ext.MessageBox.show({ title: 'Alerta', msg:result.msg , buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
-                        }
-                    
-                });
+        formulario.getForm().submit({//AQUI ENVIO LA DATA 
+            url: BASE_URL + 'avance/avance/registrarAvance',
+            method: 'POST',
+            params: formulario.getForm().getValues(),
+            success: function (form, action) {
+                var result = action.result;
+                loadingMask.hide();
 
-        
-    },// fin de la function 
+                if (result.success) {
+                    grid.getView().refresh();
+                    grid.getStore().load();
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    win.close();
 
- onClickLimpiarAvance:function(form) {
-         formulario=this.getAvance();
-         formulario.getForm().reset();
+                }
+                else {
+                    Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+                    // myapp.util.Util.showErrorMsg(result.msg);
+                }
+            },
+            failure: function (form, action) {
+                var result = action.result;
+                loadingMask.hide();
+                Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
+            }
 
-    },// fin de la function 
+        });
 
- changeFecha:function(form) {
-         formulario=this.getAvance();
-         formulario.getForm().reset();
+
+    }, // fin de la function 
+
+    onClickLimpiarAvance: function (form) {
+        formulario = this.getAvance();
+        formulario.getForm().reset();
+
+    }, // fin de la function 
+
+    cambiarFecha: function (form) {
+        formulario = this.getAvance();
+         
 
     },
-
-    onClickAgregarAvance: function(button, e, options)
+    onClickAgregarAvance: function (button, e, options)
     {
-           
-          var win=Ext.create('myapp.view.registrar.Gridbuscar');
-           win.show();
-          
-           
-    },
+
+        var win = Ext.create('myapp.view.registrar.Gridbuscar');
+        win.show();
 
 
+    }
+   
 });

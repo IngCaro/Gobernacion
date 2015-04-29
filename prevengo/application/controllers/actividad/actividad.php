@@ -1,7 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+ $newVar = null;
 class Actividad extends CI_Controller
 {
+   
      public function __construct(){
         parent::__construct();
         session_start();
@@ -9,6 +10,7 @@ class Actividad extends CI_Controller
         $this->load->database();
         $this->load->library('session');
         $this->load->model('actividad/actividad_model');
+         $this->load->model('evento/evento_model');
     } 
 
 
@@ -101,8 +103,8 @@ public function obtenerEventosConPlandeAccion()
 
 public function obtenerPlandeAccionDeEvento()
     {
-        // $id = $this->input->post('id');
-        $id=1;
+         $id = $this->input->get('id');
+         $newVar= $id;
          $resultdbd=array();
         if ($resultdbd=$this->actividad_model->cargarPlandeAccionDeEvento($id)){
                 $output = array(
@@ -112,37 +114,71 @@ public function obtenerPlandeAccionDeEvento()
                 );
            echo json_encode($output);
         }
+             
     }//fin de la funcion
    
 
+    public function obtenerActividadDependiente()
+    {
+         $id = $this->input->get('id');
+         $resultdbd=array();
+        if ($resultdbd=$this->actividad_model->cargarActividadDependiente($id)){
+                $output = array(
+                   'success'   => true,
+                   'total'     => count($resultdbd),
+                   'data'      => array_splice($resultdbd,$this->input->get("start"),$this->input->get("limit"))
+                );
+           echo json_encode($output);
+        }
+        
+            
+    }//fin de la funcion
     
      public function registrarActividad()
     {
             $descripcion=$this->input->post('txtDescripcion');
             $usuario=1;
-            $evento=1;
+            $evento=$this->input->post('lblIdEvent');  
             $fecharegistro = date('Y-m-d');
             $fechaT= $this->input->post('dtfFechaT');
             $fechaPA= $this->input->post('dtfFechaPA');
             $estatus=1;
+            $estatusEv=2;   
             
+            if ($this->input->post('cmbActividadDepende')==''||$this->input->post('cmbActividadDepende')==null ||$this->input->post('cmbActividadDepende')=='Seleccione')
+            {
+                $depende=null;
+            }
+            else 
+            {
+               $depende=$this->input->post('cmbActividadDepende'); 
+            }
             
+
              $datactividad = array(
-                                    'usuario'        =>  $evento,
-                                    'evento'         =>  $usuario,
+                                    'usuario'        =>  $usuario,
+                                    'evento'         =>  $evento,
                                     'descripcion'    =>  $descripcion,
                                     'fecharegistro'  =>  $fecharegistro,              
                                     'fechaaviso'     => $fechaPA,
                                     'fechatope'      => $fechaT,
+                                    'actividad'      => $depende,
                                     'estatus'        =>  $estatus,
 
                                                         );
-                                                                        
+
+                                                       
+                $dataEvento = array(
+                                   
+                                    'id'         =>  $evento,
+                                    'estatus'        =>  $estatusEv,
+
+                                                        );
                                        $result=$this->actividad_model->guardarActividad($datactividad);
-                                      
+                                       $resultEve=$this->evento_model->cambiarEstatus($dataEvento);
  
                                        
-                      if($result){
+                      if($result and $resultEve){
                            echo json_encode(array(
                            "success"   => true,
                             "msg"       => "Se Guardo con Éxito." //modificado en la base de datos

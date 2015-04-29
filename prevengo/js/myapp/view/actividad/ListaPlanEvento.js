@@ -7,7 +7,7 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
         'Ext.selection.CheckboxModel',
         'Ext.ux.ajax.SimManager',
     ],
-    features: [ ],
+    
     store: Ext.create('myapp.store.actividad.ActividadEventoStore'),
     emptyText: 'No hay Plan de Acción registrado',
     columnLines: true,
@@ -26,13 +26,13 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                
             }, {
                 dataIndex: 'descripcion',
-                flex: 1,
+                flex: 1.5,
                 text: 'Descripcion',
               
             }, 
             {
                 dataIndex: 'fecha',
-                flex: 0.5,
+                flex: 0.3,
                 text: 'Fecha Tope',
               
             },
@@ -54,8 +54,17 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                         xtype: 'button',
                         name: 'btnEditarPlan',
                         text: 'Editar',
-                        iconCls: 'useredit'
-                    }]
+                        iconCls: 'editar'
+                    },
+                     {
+                        xtype: 'label',
+                        name: 'lblIdEvento',
+                        text: '',
+                        hidden:true
+     
+                       
+                    }
+                ]
             }];
     }
 });

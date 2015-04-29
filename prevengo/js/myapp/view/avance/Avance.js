@@ -33,6 +33,7 @@ Ext.define('myapp.view.registrar.Avance', {
                             x: 0,
                             y: 10,
                             width: 230,
+                           
                             fieldLabel: 'Tipo de Avance',
                             name:'cmbTipoAvance',
                             id: 'cmbTipoAvance',
@@ -55,7 +56,10 @@ Ext.define('myapp.view.registrar.Avance', {
                             width: 620,
                             name:'txtDescripcion',
                             id:'txtDescripcion',
-                            fieldLabel: 'Descripción:'
+                            fieldLabel: 'Descripción:',
+                            allowBlank :false,
+                            minLength:5,
+                            maxLength: 95,
                         },
                         {
                             xtype: 'numberfield',
@@ -75,6 +79,7 @@ Ext.define('myapp.view.registrar.Avance', {
                     fieldLabel: 'Plan de Acción:',
                     name:'cmbActividad',
                     id: 'cmbActividad',
+                    allowBlank :false,
                     editable      : false,
                     store         : Ext.create('myapp.store.actividad.ActividadStore'),
                     valueField    : 'id',

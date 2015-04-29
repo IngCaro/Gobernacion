@@ -3,8 +3,8 @@ extend: 'Ext.window.Window',
   alias: 'widget.winPlanEvento',
   itemId: 'winPlanEvento',
   title:'Actividad',
-  height: 350,
-  width: 550,
+  height: 450,
+  width: 850,
   modal:true,
   requires: [
    'myapp.view.actividad.ListaPlanEvento'
@@ -24,11 +24,6 @@ extend: 'Ext.window.Window',
     }]
   },
   buildDockedItems : function(){
-    return [{
-      xtype : 'toolbar',
-      flex  : 1,
-      dock  : 'bottom',
-      items: []
-    }]
+    return []
   }
 });
