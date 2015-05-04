@@ -1,12 +1,15 @@
 Ext.define('myapp.model.store.actividad.ActividadListaGridModel', { 
    extend: 'Ext.data.Model',
-    idProperty: 'id',
+   idProperty: 'id',
     fields: [
-        { name: 'id'},
-        { name: 'evento'},
-        { name: 'descripcion'},
-        { name: 'fecha'},
-        {name: 'activ'},
-        {name: 'descripEvento'},
+        { name: 'id', type: 'INT'},
+        { name: 'evento', type: 'STRING'},
+        { name: 'descripcion', type: 'STRING'},
+        { name: 'fecha', type: 'DATE'},
+        {name:  'idAct', type: 'INT'},
+        { name: 'fechaAct', type: 'DATE'},
+        {name:  'actividad', type: 'STRING'},
+        {name:  'estatus', type: 'STRING'},
+        {name:  'eventoColor',type: 'STRING'},
     ] 
 });

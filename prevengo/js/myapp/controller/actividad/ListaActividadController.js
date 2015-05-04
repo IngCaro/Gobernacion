@@ -25,7 +25,7 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
     init: function(application) {
         this.control({
             "listaActividad":{
-                itemdblclick: this.editarUsuario
+                itemdblclick: this.onClickVerPlan
             },
             "winActividad checkbox[name=cbfDepende]":{
                 selection: this.cargarActividad
@@ -33,34 +33,20 @@ Ext.define('myapp.controller.actividad.ListaActividadController', {
         }); 
     },   
 
-    onClickVerPlan:function (button, e, options) {
-         var grid = this.getListaActividad();
-         record = grid.getSelectionModel().getSelection();
-        // record = Ext.util.JSON.encode(record);
-        if(record[0]){
-            
-            record[0].get('id');
-            
-                              
-        }else{
-            Ext.MessageBox.show({ title: 'Informaci&oacute;n',
-            msg: 'Debe seleccionar por lo menos un Evento',
-            buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.INFO });
-        }
-       },// fin de la function
+   
 
 
 
- editarUsuario: function (record, item, index, e, eOpts ){
+ onClickVerPlan: function (record, item, index, e, eOpts ){
     
     var win = Ext.create('myapp.view.actividad.WinPlanEvento'); 
-         
+          
      newGrid=this.getListaPlanEvento();
-     
       store= newGrid.getStore();      
       store.proxy.extraParams.id=item.data.id;
       store.load();
       newGrid.down("label[name=lblIdEvento]").setText(item.data.id);
+      win.setTitle("Plan de Accion para el Evento: "+ item.data.evento);
       win.show();
       
   },

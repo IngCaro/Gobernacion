@@ -65,4 +65,44 @@ class Evento extends CI_Controller {
         }
     }//fin Cargar Avance
     
+    
+     public function listaEventosSinInciar() {
+           $id=1;
+        $eventos = $this->evento_model->cargarListaEventoSinIniciar($id);
+
+        if ($eventos->num_rows() > 0) {
+
+            foreach ($eventos->result_array() as $row) {
+
+                if ($row['estatus']==1)
+                {
+                    $estatus="Sin Iniciar";
+                }else 
+                    $estatus="Revisar Estatus";
+              
+
+                $data[] = array(
+                    'id' => $row['id'],
+                    'titulo' => $row['titulo'],
+                    'descripcion' => $row['descripcion'],
+                    'fechaEvento' => $row['fechaEv'],
+                    'fechaPreAviso' => $row['fechaPA'],
+                    'presupuesto' => $row['presupuesto'],
+                    'estatus' => $estatus,
+                );
+            }
+            $output = array(
+                'success' => true,
+                'total' => count($data),
+                'data' => array_splice($data, $this->input->get("start"), $this->input->get("limit"))
+            );
+            echo json_encode($output);
+        } else {
+            echo json_encode(array(
+                "success" => false
+            ));
+        }
+    }//fin Cargar Avance
+    
+    
 }//fin del controller

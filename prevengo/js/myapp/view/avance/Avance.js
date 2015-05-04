@@ -16,24 +16,34 @@ Ext.define('myapp.view.registrar.Avance', {
     return [{
             xtype: 'container',
             height: 270,
-            width: 676,
+            width: 490,
             layout: 'absolute',
             items: [
                 {
                     xtype: 'fieldset',
                     x: 10,
-                    y: 80,
-                    height: 120,
-                    width: 650,
+                    y: 130,
+                    height: 170,
+                    width: 460,
                     layout: 'absolute',
-                    title: '',
+                    title: 'Detalles del Avance',
                     items: [
                        {
-                            xtype: 'combobox',
+                            xtype: 'textareafield',
                             x: 0,
                             y: 10,
-                            width: 230,
-                           
+                            width: 430,
+                            allowBlank :false,  
+                            name:'txtDescripcion',
+                            id:'txtDescripcion',
+                            fieldLabel: 'Descripción:',
+                            minLength:5,
+                            maxLength: 95
+                        }, {
+                            xtype: 'combobox',
+                            x: 0,
+                            y: 90,
+                            width: 210,
                             fieldLabel: 'Tipo de Avance',
                             name:'cmbTipoAvance',
                             id: 'cmbTipoAvance',
@@ -48,33 +58,24 @@ Ext.define('myapp.view.registrar.Avance', {
                             triggerAction : 'all'
                             
                         },
-                        {
-                            xtype: 'textfield',
-                            anchor: '100%',
-                            x: 0,
-                            y: 45,
-                            width: 620,
-                            name:'txtDescripcion',
-                            id:'txtDescripcion',
-                            fieldLabel: 'Descripción:',
-                            allowBlank :false,
-                            minLength:5,
-                            maxLength: 95,
-                        },
+                       
                         {
                             xtype: 'numberfield',
-                            x: 0,
-                            y: 80,
+                            x: 230,
+                            y: 90,
+                            width: 200,
                             name:'txtCosto',
                             id:'txtCosto',
-                            fieldLabel: 'Costo:'
+                            fieldLabel: 'Costo:',
+                            minLength:2,
+                            maxLength:10
                         }
                     ]
                 },
                 {
                     xtype: 'combobox',
                     x: 20,
-                    y: 40,
+                    y: 20,
                     width: 430,
                     fieldLabel: 'Plan de Acción:',
                     name:'cmbActividad',
@@ -90,21 +91,38 @@ Ext.define('myapp.view.registrar.Avance', {
                     forceSelection: true,
                     triggerAction : 'all'
                     
-                },{
+                },
+                {
                             xtype: 'label',
-                            x: 470,
-                            y: 25,
+                            x: 20,
+                            y: 60,
+                            name:'lblTitleNombreEvento',
+                            id:'lblTitleNombreEvento',
+                            text: 'Evento:'
+                        },
+                        {
+                            xtype: 'label',
+                            x: 130,
+                            y: 60,
+                            name:'lblNombreEvento',
+                            id:'lblNombreEvento',
+                            text: ''
+                        },
+                     {
+                            xtype: 'label',
+                            x: 20,
+                            y: 80,
                             name:'lblTitleFechaAsignacion',
                             id:'lblTitleFechaAsignacion',
                             text: 'Fecha de Asignación:'
                         },
                         {
                             xtype: 'label',
-                            x: 470,
-                            y: 45,
+                            x: 155,
+                            y: 80,
                             name:'lblFechaAsignacion',
                             id:'lblFechaAsignacion',
-                            text: '15-04-2015'
+                            text: ''
                         }
                
 
@@ -122,18 +140,6 @@ Ext.define('myapp.view.registrar.Avance', {
             xtype : 'tbfill'
           },{
             xtype   : 'button',
-            iconCls : 'icon-buscar',
-            text    : 'Cancelar',
-            tooltip :'Catalogo Empleado',
-            name    :'btnCancelar',
-
-        },{
-            xtype   : 'button',
-            iconCls :'icon-limpiar',
-            name      :'btnLimpiar',
-            text    : 'Limpiar'
-          },{
-            xtype   : 'button',
             iconCls :'save',
             name    :'btnGuardar',
            // itemId: 'addAvance', 
@@ -143,6 +149,12 @@ Ext.define('myapp.view.registrar.Avance', {
             scope   : this,
 
 
+          },
+          {
+            xtype   : 'button',
+            iconCls :'icon-limpiar',
+            name      :'btnLimpiar',
+            text    : 'Limpiar'
           }]
       }]
      

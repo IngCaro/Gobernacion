@@ -13,7 +13,8 @@ class Actividad_model extends CI_Model{
         
 	 public function cargarPlandeAccion(){
      
-            $query = $this->db->query("select actividad.id, actividad.descripcion from actividad 
+            $query = $this->db->query("select actividad.id, actividad.descripcion,  avance.fechaasignacion as fecha, evento.titulo as evento
+                                        from actividad 
                                         inner join avance on actividad.id=avance.actividad
                                         inner join evento on evento.id=actividad.evento
                                         where (evento.estatus in (1,2)) and (actividad.estatus in (1,2)) and (avance.usuario=3)
@@ -55,52 +56,56 @@ public function  cambiarEstatus($data){
         $sql="SELECT ev.id AS id,
                      ev.titulo AS evento,
                      ev.descripcion AS descripcion,
-                     ev.fechatope AS fecha
+                     ev.fechatope AS fecha,
+                     actividad.id AS idAct,
+                     actividad.fechatope AS fechaAct,
+                     actividad.descripcion AS actividad,
+                     actividad.estatus AS estatus
                          
                 FROM evento AS ev 
-                
+                INNER JOIN actividad 
+                ON actividad.evento= ev.id
                 WHERE ev.estatus IN (1,2)
+                     AND  actividad.usuario=1
+                     and actividad.evento=1
                       
                        
                       
-                ORDER BY fecha, ev.estatus  ASC";
+               ";
 
           $query = $this->db->query($sql);
-                $resultado = array();
-                $resultdb=array();  
-                if ($query->num_rows() > 0){
-                foreach ($query->result() as $row){
-                    $resultado[] = $row;
-                }
-                return $resultado;
-                $query->free-result();
-              } 
+          return $query;
+             
     
  }
 
  public function cargarPlandeAccionDeEvento($id){
   
-        $sql="SELECT ac.id AS id,
-                     ac.descripcion AS descripcion, 
-                     ac.fechatope AS fecha
+        $sql=" SELECT ac.id AS id,
+                    ac.descripcion AS descripcion, 
+                     ac.fechatope AS fecha,
+                     ac.fechaaviso AS fechaPA, 
+                     actividad.descripcion AS depende,
+                     ac.estatus AS estatus
+                
                 FROM actividad AS ac 
-                WHERE
-                      ac.estatus IN (1,2) 
+                LEFT JOIN actividad 
+                ON actividad.id=ac.actividadepende
+                WHERE ac.estatus IN (0,1,2) 
                       AND ac.usuario=1  
                       AND ac.evento=$id";
 
-          $query = $this->db->query($sql);
-                $resultado = array();
-                $resultdb=array();  
-                if ($query->num_rows() > 0){
-                foreach ($query->result() as $row){
-                    $resultado[] = $row;
-                }
-                return $resultado;
-                $query->free-result();
-              } 
+                 $query = $this->db->query($sql);
+               
+                return $query;
+               
+               
+            
+               
     
  }
+ 
+ 
  
  
   public function cargarActividadDependiente($id){

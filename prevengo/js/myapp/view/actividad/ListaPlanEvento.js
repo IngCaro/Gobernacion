@@ -32,10 +32,20 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
             }, 
             {
                 dataIndex: 'fecha',
-                flex: 0.3,
+                flex: 0.5,
                 text: 'Fecha Tope',
               
             },
+            {
+                dataIndex: 'depende',
+                flex: 1,
+                text: 'Actividad Dependiente',
+            },
+             {
+                dataIndex: 'estatus',
+                flex: 0.5,
+                text: 'Estatus',
+            }
             ]
     },
     buildDockedItems: function () {
@@ -55,6 +65,12 @@ Ext.define('myapp.view.actividad.ListaPlanEvento', {
                         name: 'btnEditarPlan',
                         text: 'Editar',
                         iconCls: 'editar'
+                    },
+                     {
+                        xtype: 'button',
+                        name: 'btnCancelarPlan',
+                        text: 'Cancelar Actividad',
+                        iconCls: 'cancelar'
                     },
                      {
                         xtype: 'label',

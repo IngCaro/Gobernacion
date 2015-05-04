@@ -43,7 +43,17 @@ Ext.define('myapp.controller.avance.AvanceController', {
 
 
         });
+    }, 
+    
+    //===================== Funciones de la Lista===============================
+    onClickAgregarAvance: function (button, e, options){
+         var win = Ext.create('myapp.view.avance.Gridbuscar');
+        win.setTitle("Nuevo Avance");
+        win.show();
     },
+    
+    
+    //===================== Funciones del formulario===============================
     onClickguardarAvance: function (button, e, options) {
         formulario = this.getAvance();
         grid = this.getGridListaAvance();
@@ -64,7 +74,6 @@ Ext.define('myapp.controller.avance.AvanceController', {
                     grid.getStore().load();
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
                     win.close();
-
                 }
                 else {
                     Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
@@ -76,11 +85,9 @@ Ext.define('myapp.controller.avance.AvanceController', {
                 loadingMask.hide();
                 Ext.MessageBox.show({title: 'Alerta', msg: result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING});
             }
-
         });
-
-
     }, // fin de la function 
+
 
     onClickLimpiarAvance: function (form) {
         formulario = this.getAvance();
@@ -90,16 +97,22 @@ Ext.define('myapp.controller.avance.AvanceController', {
 
     cambiarFecha: function (form) {
         formulario = this.getAvance();
-         
-
-    },
-    onClickAgregarAvance: function (button, e, options)
-    {
-
-        var win = Ext.create('myapp.view.registrar.Gridbuscar');
-        win.show();
-
-
+        storeAct= formulario.down("combobox[name=cmbActividad]").getStore();
+        valor= formulario.down("combobox[name=cmbActividad]").getValue();
+        //fec= storeAct.data.fecha;
+        //console.log(storeAct);
+         for (i=0; i<storeAct.data.items.length; ++i)
+         { 
+            if(storeAct.data.items[i].data['id']==valor){    
+             formulario.down("label[name=lblFechaAsignacion]").setText(storeAct.data.items[i].data['fecha']);
+             formulario.down("label[name=lblNombreEvento]").setText(storeAct.data.items[i].data['evento']);
+              i=length+1;
+            }
+             
+         }
+             
+        
     }
+    
    
 });

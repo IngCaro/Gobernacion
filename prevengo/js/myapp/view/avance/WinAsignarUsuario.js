@@ -1,13 +1,13 @@
-Ext.define('myapp.view.avance.Gridbuscar', {
+Ext.define('myapp.view.avance.WinAsignarUsuario', {
 extend: 'Ext.window.Window',
   alias: 'widget.gridbuscar',
   itemId: 'gridbuscar',
-  title:'Avance',
+  title:'Usuarios',
   height: 410,
   width: 490,
   modal:true,
   requires: [
-   'myapp.view.avance.Avance'
+   'myapp.view.avance.ListaAsignarUsuario'
   ],
   layout: {
    	type: 'fit'
@@ -20,7 +20,7 @@ extend: 'Ext.window.Window',
   },
   buildItem : function(){
     return [{
-      xtype: 'avance',
+      xtype: 'listaAsignarUsuario',
     }]
   },
   buildDockedItems : function(){
@@ -28,7 +28,14 @@ extend: 'Ext.window.Window',
       xtype : 'toolbar',
       flex  : 1,
       dock  : 'bottom',
-      items: []
+      items: [
+          
+      ]
     }]
   }
 });
+
+
+
+
+      

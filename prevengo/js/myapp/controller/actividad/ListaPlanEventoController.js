@@ -1,3 +1,5 @@
+var nuevo=false;
+
 Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
     extend: 'Ext.app.Controller',
     views: ['actividad.ListaPlanEvento',
@@ -45,18 +47,30 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
 //=======================Funciones de la ListaPlanEvento=========================================
 
     onClickNuevoPlan:function(button, e, options) {
-
+     nuevo=true;
         var win = Ext.create('myapp.view.actividad.WinActividad');
-          
- 
-            win.show();
-           
-            //win.show();
+            
+         win.setTitle("Nueva Actividad");
+         win.show();
+            
        },// fin de la function
 
      onClickEditarPlan:function(button, e, options) {
-
-
+        nuevo=false;
+        var grid = this.getListaPlanEvento(),
+        record = grid.getSelectionModel().getSelection();
+        if(record[0]){
+            var editWindow = Ext.create('myapp.view.actividad.WinActividad');
+           editWindow.setTitle("Actualizar Actividad");
+            editWindow.down('actividadForm').getForm().reset();
+            editWindow.down('actividadForm').loadRecord(record[0]);
+            editWindow.down('textareafield[name=txtDescripcion]').setReadOnly(true);
+            editWindow.show();
+        }
+        else 
+        {
+            
+        }
        },// fin de la function
 
 //=======================Funciones del WinActividad=========================================
@@ -65,14 +79,15 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
               formulario=this.getActividadForm();
               win=this.getWinActividad();
               grid=this.getListaPlanEvento();
-
+ 
               var loadingMask = new Ext.LoadMask(Ext.getBody(), { msg: "grabando..." });
                 loadingMask.show();
                 
                
+                if (nuevo){
                     
-                 
-                 formulario.getForm().submit({ //AQUI ENVIO LA DATA 
+                    
+                    formulario.getForm().submit({ //AQUI ENVIO LA DATA 
                     url: BASE_URL+'actividad/actividad/registrarActividad',
                     method:'POST',
                     params:
@@ -81,7 +96,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                          dtfFechaT: formulario.down("textfield[name=dtfFechaT]").getValue(),
                          dtfFechaPA: formulario.down("textfield[name=dtfFechaPA]").getValue(),
                          cmbActividadDepende:formulario.down("combobox[name=cmbActividadDepende]").getValue(),
-                         lblIdEvent:formulario.down("label[name=lblIdEvent]").getEl().dom.textContent,
+                         lblIdEvent:grid.down("label[name=lblIdEvento]").getEl().dom.textContent,
                       },
                     
  
@@ -108,6 +123,49 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
                         }
                     
                 });
+               }
+               else
+               {
+                   
+                   formulario.getForm().submit({ //AQUI ENVIO LA DATA 
+                    url: BASE_URL+'actividad/actividad/actualizarActividad',
+                    method:'POST',
+                    params:
+                      {
+                         txtDescripcion:  formulario.down("textfield[name=txtDescripcion]").getValue(),
+                         dtfFechaT: formulario.down("textfield[name=dtfFechaT]").getValue(),
+                         dtfFechaPA: formulario.down("textfield[name=dtfFechaPA]").getValue(),
+                         cmbActividadDepende:formulario.down("combobox[name=cmbActividadDepende]").getValue(),
+                         
+                      },
+                    
+ 
+                    success: function(form, action){
+                        var result = action.result;           
+                        loadingMask.hide();
+                       
+                        if (result.success){
+                               grid.getView().refresh();
+                               grid.getStore().load();
+                               Ext.MessageBox.show({ title: 'Alerta', msg:  result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                               win.close();
+                               
+                            }
+                        else{
+                           Ext.MessageBox.show({ title: 'Alerta', msg:  result.msg, buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                           // myapp.util.Util.showErrorMsg(result.msg);
+                        }
+                    },
+                    failure: function(form,action){
+                    var result = action.result;    
+                     loadingMask.hide();
+                            Ext.MessageBox.show({ title: 'Alerta', msg:"Ha ocurrido un error. Por vuelva a intentarlo, si el problema persiste comuniquese con el administrador" , buttons: Ext.MessageBox.OK, icon: Ext.MessageBox.WARNING });
+                        }
+                    
+                });
+               }
+                 
+                 
        },// fin de la function
        
    cargarActividad:function (){
@@ -123,7 +181,7 @@ Ext.define('myapp.controller.actividad.ListaPlanEventoController', {
    } else {
        Ext.ComponentQuery.query('winActividad combobox[name=cmbActividadDepende]')[0].setDisabled(true);
    }
-
-      Ext.ComponentQuery.query('actividadForm label[name=lblIdEvent]')[0].setText(evento);   
+       
+        
   }
 });

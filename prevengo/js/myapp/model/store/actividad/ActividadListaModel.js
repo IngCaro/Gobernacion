@@ -5,5 +5,9 @@ Ext.define('myapp.model.store.actividad.ActividadListaModel', {
         { name: 'id'},
         { name: 'descripcion'},
         { name: 'fecha'},
+        { name: 'fechaPA'},
+        { name: 'depende'},
+        { name: 'evento'},
+        { name: 'estatus'},
     ] 
 });

@@ -140,15 +140,7 @@ Ext.define('myapp.view.actividad.ActividadForm', {
                     iconCls: 'icon-limpiar',
                     name: 'btnLimpiar',
                     text: 'Limpiar'
-                },
-                {
-                        xtype: 'label',
-                        name: 'lblIdEvent',
-                        text: '',
-                        hidden:true
-     
-                       
-                    }
+                }
                 
             ]
         }]

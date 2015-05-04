@@ -2,7 +2,7 @@ Ext.define('myapp.view.actividad.WinPlanEvento', {
 extend: 'Ext.window.Window',
   alias: 'widget.winPlanEvento',
   itemId: 'winPlanEvento',
-  title:'Actividad',
+  title:'Plan de Accion',
   height: 450,
   width: 850,
   modal:true,

@@ -1,13 +1,13 @@
-Ext.define('myapp.view.avance.Gridbuscar', {
+Ext.define('myapp.view.actividad.WinAsignarEjecutorAPlan', {
 extend: 'Ext.window.Window',
-  alias: 'widget.gridbuscar',
-  itemId: 'gridbuscar',
-  title:'Avance',
-  height: 410,
-  width: 490,
+  alias: 'widget.winAsignarEjecutorAPlan',
+  itemId: 'winAsignarEjecutorAPlan',
+  title:'Plan de Accion',
+  height: 450,
+  width: 850,
   modal:true,
   requires: [
-   'myapp.view.avance.Avance'
+   'myapp.view.actividad.ListaEmpleadoPlan'
   ],
   layout: {
    	type: 'fit'
@@ -20,15 +20,10 @@ extend: 'Ext.window.Window',
   },
   buildItem : function(){
     return [{
-      xtype: 'avance',
+      xtype: 'listaEmpleadoPlan',
     }]
   },
   buildDockedItems : function(){
-    return [{
-      xtype : 'toolbar',
-      flex  : 1,
-      dock  : 'bottom',
-      items: []
-    }]
+    return []
   }
 });

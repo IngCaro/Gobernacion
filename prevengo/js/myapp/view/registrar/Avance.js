@@ -16,17 +16,17 @@ Ext.define('myapp.view.registrar.Avance', {
     return [{
             xtype: 'container',
             height: 270,
-            width: 676,
+            width: 490,
             layout: 'absolute',
             items: [
                 {
                     xtype: 'fieldset',
                     x: 10,
-                    y: 80,
-                    height: 120,
-                    width: 650,
+                    y: 120,
+                    height: 150,
+                    width: 10,
                     layout: 'absolute',
-                    title: '',
+                    title: 'Detalles del Avance',
                     items: [
                        {
                             xtype: 'combobox',
@@ -79,7 +79,7 @@ Ext.define('myapp.view.registrar.Avance', {
                     store         : Ext.create('myapp.store.actividad.ActividadStore'),
                     valueField    : 'id',
                     displayField  : 'descripcion',
-                    emptyText     :'Seleccione',
+                    emptyText     :'Seleccione dos',
                     queryMode     : 'local',
                     allowBlank    : false,
                     forceSelection: true,
